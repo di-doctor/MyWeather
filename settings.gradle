@@ -1,0 +1,3 @@
+include ':numberviewholder'
+include ':app'
+rootProject.name = "MyWeather"
