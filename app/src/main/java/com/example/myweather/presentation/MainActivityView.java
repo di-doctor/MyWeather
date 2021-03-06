@@ -13,4 +13,8 @@ public interface MainActivityView extends MvpView {
     void onCityAdded(WeatherObject weatherObject);
     @AddToEndSingle
     void onCitiesLoaded(List<WeatherObject> list);
+    @AddToEndSingle
+    void errorLoad();
+    @AddToEndSingle
+    void successLoad();
 }
