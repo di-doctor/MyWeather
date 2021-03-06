@@ -30,4 +30,9 @@ public class WeatherObject {
     public Float getTemperature() {
         return temperature;
     }
+
+    @Nullable
+    public Integer getId() {
+        return id;
+    }
 }
