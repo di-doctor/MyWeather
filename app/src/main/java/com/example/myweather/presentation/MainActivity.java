@@ -2,10 +2,8 @@ package com.example.myweather.presentation;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.DatabaseUtils;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,28 +11,22 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myweather.AdapterRecicleViewOnMainActivity;
 import com.example.myweather.CityObject;
-import com.example.myweather.MainApplication;
 import com.example.myweather.R;
-import com.example.myweather.WeatherAPI;
 import com.example.myweather.WeatherObject;
-import com.example.myweather.WeatherResponse;
 import com.example.myweather.databinding.ActivityMainBinding;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
-
 
 public class MainActivity extends MvpAppCompatActivity implements MainActivityView, View.OnClickListener {
     @InjectPresenter
@@ -62,7 +54,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
         setContentView(binding.getRoot());
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         binding.anotherActivityButton.setOnClickListener(this);     // назначение кнопке слушателя this
         binding.recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -70,9 +61,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
         mAdapter = new AdapterRecicleViewOnMainActivity();
         binding.recyclerView.setAdapter(mAdapter);
         sPref = getSharedPreferences(SP_NAME, MODE_PRIVATE);
-
         if (!mainActivityPresenter.isInRestoreState(this)) {
-            mainActivityPresenter.loadWeather();
+            mainActivityPresenter.weatherUpdateTempList();
         }
     }
 
@@ -92,8 +82,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
 
         switch (item.getItemId()) {
             case R.id.refresh_weather_button:
-                mainActivityPresenter.weatherUpdateList();
-
+                mainActivityPresenter.weatherUpdateTempList();
                 //reFreshList(false);
                 break;
             case R.id.id_about:
@@ -140,7 +129,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
         super.onResume();
     }
 
-
     @Override
     public void onClick(View v) {
         // Создаем объект Intent для вызова новой Activity
@@ -174,9 +162,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
 
     @Override
     public void onCitiesLoaded(List<WeatherObject> list) {
-        runOnUiThread(()->{
-            mAdapter.setNewData(list);
-        });
+        runOnUiThread(()-> mAdapter.setNewData(list));
     }
 
     @Override

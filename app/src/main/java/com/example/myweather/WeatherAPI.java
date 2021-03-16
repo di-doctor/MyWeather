@@ -7,7 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public class WeatherAPI {
-        public static String KEY = "f7558befe506a8be0b6f433a346c9bcc";
+    public static String KEY = "f7558befe506a8be0b6f433a346c9bcc";
     public static final String BASE_URL = "https://api.openweathermap.org/data/2.5/";
     private static ApiInterface api = null;
 
