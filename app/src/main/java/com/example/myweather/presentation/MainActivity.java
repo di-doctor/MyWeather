@@ -1,3 +1,4 @@
+
 package com.example.myweather.presentation;
 
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,7 +44,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
     int idCity = 0;
     SharedPreferences sPref;
     private AdapterRecicleViewOnMainActivity mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.LayoutManager GridLayoutManager;
     ActivityMainBinding binding;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -56,8 +58,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
         setSupportActionBar(toolbar);
         binding.anotherActivityButton.setOnClickListener(this);     // назначение кнопке слушателя this
         binding.recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        binding.recyclerView.setLayoutManager(layoutManager);
+        GridLayoutManager = new GridLayoutManager(this,2);
+        binding.recyclerView.setLayoutManager(GridLayoutManager);
         mAdapter = new AdapterRecicleViewOnMainActivity();
         binding.recyclerView.setAdapter(mAdapter);
         sPref = getSharedPreferences(SP_NAME, MODE_PRIVATE);

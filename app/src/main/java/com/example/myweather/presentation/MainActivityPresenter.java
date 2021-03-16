@@ -47,10 +47,10 @@ public class MainActivityPresenter extends MvpPresenter<MainActivityView> {
     public void weatherUpdateTempList() {
         mExecutor.execute(() -> {
             List<WeatherObject> listWeatherObject = repositories.getAllFromDB();
-            WeatherResponse weatherResponse;
+            getViewState().onCitiesLoaded(listWeatherObject);
             try {
                 for (int i = 0; i < listWeatherObject.size(); i++) {
-                    weatherResponse = repositories.getTempFromWeatherResponse(listWeatherObject.get(i).getId());
+                    WeatherResponse weatherResponse = repositories.getTempFromWeatherResponse(listWeatherObject.get(i).getId());
                     listWeatherObject.set(i, WeatherObject.convertFromResponse(weatherResponse));
                 }
                 getViewState().onCitiesLoaded(listWeatherObject);
