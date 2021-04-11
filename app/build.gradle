@@ -7,12 +7,26 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+
     defaultConfig {
+        // ...
+        // Set the properties within `local.properties` into a `Properties` class so that values
+        // within `local.properties` (e.g. Maps API key) are accessible in this file.
+        Properties properties = new Properties()
+        if (rootProject.file("local.properties").exists()) {
+            properties.load(rootProject.file("local.properties").newDataInputStream())
+        }
+
+        // Inject the Maps API key into the manifest
+        manifestPlaceholders = [ mapsApiKey : properties.getProperty("MAPS_API_KEY", "") ]
+
+
         applicationId "com.example.myweather"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,9 +50,11 @@ dependencies {
     //moxy
     implementation "com.github.moxy-community:moxy:2.2.1"
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     annotationProcessor "com.github.moxy-community:moxy-compiler:2.2.1"
     implementation "com.github.moxy-community:moxy-android:2.2.1"
-    implementation "com.github.moxy-community:moxy-app-compat:2.2.1"
+    implementation "com.github.moxy-community:moxy-androidx:2.2.1"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
@@ -63,6 +79,10 @@ dependencies {
     }
     //noinspection GradleCompatible
     implementation "com.android.support:support-fragment:26.1.0"
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    implementation 'com.android.support:design:+'
 }
 repositories {
     mavenCentral()

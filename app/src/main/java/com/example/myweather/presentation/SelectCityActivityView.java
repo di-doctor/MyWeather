@@ -15,4 +15,6 @@ public interface SelectCityActivityView extends MvpView {
 
     @AddToEndSingle
     void onLoadFailure(String str);
+
+
 }

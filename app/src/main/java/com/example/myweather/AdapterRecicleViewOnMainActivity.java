@@ -23,16 +23,20 @@ public class AdapterRecicleViewOnMainActivity extends RecyclerView.Adapter<Adapt
         notifyItemInserted(mDataset.size() - 1);
     }
 
+    public WeatherObject getItemByPosition(int position){
+        return mDataset.get(position);
+    }
+
     public void setNewData(List<WeatherObject> list) {
         mDataset.clear();
         mDataset.addAll(list);
         notifyDataSetChanged();
     }
 
-    public void clearData() {
-        mDataset.clear();
-        notifyDataSetChanged();
-    }
+//    public void clearData() {
+//        mDataset.clear();
+//        notifyDataSetChanged();
+//    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -42,9 +46,12 @@ public class AdapterRecicleViewOnMainActivity extends RecyclerView.Adapter<Adapt
 
         public MyViewHolder(View v) {
             super(v);
-            cityTextView = v.findViewById(R.id.city_name);
-            temperatureTextView = v.findViewById(R.id.city_temp);
-            imageView = v.findViewById(R.id.imageView);
+            cityTextView = (TextView) v.findViewById(R.id.city_name);
+            temperatureTextView = (TextView) v.findViewById(R.id.city_temp);
+            imageView = (ImageView) v.findViewById(R.id.imageView);
+        }
+        void foo(){
+
         }
     }
     // Provide a suitable constructor (depends on the kind of dataset)
@@ -67,10 +74,20 @@ public class AdapterRecicleViewOnMainActivity extends RecyclerView.Adapter<Adapt
         if (temp > 0) {
             str = "+" + str;
         }
-
         holder.temperatureTextView.setText(str);
+        ImageView im = holder.imageView;
+        String startAddress = "https://openweathermap.org/img/wn/";
+        String iconId = mDataset.get(position).getIconId();
+        if(iconId == null) {
+            holder.imageView.setImageDrawable(null);
+            return;
+        }
+        String stopAddress="@2x.png";
+        String finalAddress =  startAddress+iconId+stopAddress;
 
-        Glide.with(holder.imageView.getContext()).load("https://weather.rambler.ru/favicons/browser_push_icon_256x256.png").into(holder.imageView);
+
+        Glide.with(holder.imageView.getContext()).load(finalAddress).into(im);
+        //Glide.with(holder.imageView.getContext()).load(test).into(im);
     }
 
     @Override

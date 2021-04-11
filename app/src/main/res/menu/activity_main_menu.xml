@@ -7,9 +7,5 @@
         android:orderInCategory="0"
         />
 
-    <item android:title="@string/about"
-        android:id="@+id/id_about"
-        android:orderInCategory="1"
-        android:visible="true"
-        android:onClick="OnAbout"/>
+
 </menu>

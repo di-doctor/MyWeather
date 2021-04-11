@@ -7,7 +7,6 @@ import com.example.myweather.CityObject;
 import com.example.myweather.MainApplication;
 import com.example.myweather.WeatherAPI;
 import com.example.myweather.WeatherObject;
-import com.example.myweather.WeatherResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,10 +18,18 @@ public class WeatherRepoImpl implements WeatherRepo {
         return WeatherAPI.getClient().getTempCall(String.valueOf(idcity),
                 "metric", com.example.myweather.WeatherAPI.KEY).execute().body();
     }
+    @Override
+    public  ForecastResponse getForecastFromForecastResponse(int idCity) throws IOException {
+        return  WeatherAPI.getClient().getForecastCall(String.valueOf(idCity),"metric",WeatherAPI.KEY
+                ,WeatherAPI.CNT).execute().body();
+
+    }
 
     @Override
-    public void saveTemptoDb(int id, float temp) {          // save temp using id.
+    public void saveTemptoDb(int id, float temp, String iconId) {          // save temp using id.
         MainApplication.getInstance().getDb().execSQL("UPDATE cityNameTemp SET temperature=" + temp + " " +
+                "WHERE cityNameTemp.id = " + id + ";");
+        MainApplication.getInstance().getDb().execSQL("UPDATE cityNameTemp SET iconId=" + DatabaseUtils.sqlEscapeString(iconId) + " " +
                 "WHERE cityNameTemp.id = " + id + ";");
 
     }
@@ -35,7 +42,8 @@ public class WeatherRepoImpl implements WeatherRepo {
                 String city = cursor.getString(cursor.getColumnIndex("city"));
                 int id = cursor.getInt(cursor.getColumnIndex("id"));
                 float temperature = cursor.getFloat(cursor.getColumnIndex("temperature"));
-                list.add(new WeatherObject(city, temperature, id));
+                String iconId = cursor.getString((cursor.getColumnIndex("iconId")));
+                list.add(new WeatherObject(city, temperature, id, iconId));
             }
             return list;
         }
@@ -47,4 +55,6 @@ public class WeatherRepoImpl implements WeatherRepo {
         MainApplication.getInstance().getDb().execSQL("INSERT OR REPLACE INTO cityNameTemp (city, id) " +
                 "VALUES (" + escapeCity + ", " + cityObject.getId() + ");");
     }
+
+
 }
