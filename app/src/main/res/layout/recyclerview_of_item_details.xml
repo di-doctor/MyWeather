@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"    >
+    android:layout_height="wrap_content"    >
 
     <TextView
         android:id="@+id/textRv1"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:paddingLeft="2dp"
@@ -25,7 +25,7 @@
     <ImageView
         android:id="@+id/imageViewRv"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
 
         android:layout_marginTop="8dp"
@@ -41,14 +41,14 @@
     <TextView
         android:id="@+id/textRv2"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
 
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/textview2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/imageViewRv"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_default="percent"
@@ -57,7 +57,7 @@
     <TextView
         android:id="@+id/textRv3"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
 
         android:gravity="center"
 
@@ -74,7 +74,7 @@
     <TextView
         android:id="@+id/textRv4"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
 
         android:layout_marginTop="8dp"
@@ -90,7 +90,7 @@
     <TextView
         android:id="@+id/textRv5"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:paddingRight="2dp"

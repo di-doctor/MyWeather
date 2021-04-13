@@ -17,10 +17,9 @@ public class ForecastWeatherFromApi {
     private List<WeatherFromApi> weatherList;
 
 
-//*******************************_GET
+//*******************************_GET_**************
     public Temp getTemp() {
-        return temp;
-    }
+        return temp;    }
 
     public List<WeatherFromApi> getWeatherList() {
         return weatherList;

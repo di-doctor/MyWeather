@@ -6,6 +6,15 @@ public class Temp {
     @SerializedName("day")
     private float day;
 
+    @SerializedName("night")
+    private float night;
+
+    @SerializedName("eve")
+    private float eve;
+
+    @SerializedName("morn")
+    private float morning;
+
     public float getDayTemp() {
         return day;
     }
@@ -22,13 +31,6 @@ public class Temp {
         return morning;
     }
 
-    @SerializedName("night")
-    private float night;
 
-    @SerializedName("eve")
-    private float eve;
-
-    @SerializedName("morn")
-    private float morning;
 
 }

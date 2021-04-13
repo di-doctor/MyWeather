@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +44,7 @@ import moxy.presenter.InjectPresenter;
 public class CityDetailsFragment extends MvpAppCompatFragment implements CityDetailsView, OnMapReadyCallback {
     @InjectPresenter
     CityDetailsFragmentPresenter cityDetailsFragmentPresenter;
-private AdapterRecyclerViewCityDatails adapterRecyclerViewCityDatails;
+    private AdapterRecyclerViewCityDatails adapterRecyclerViewCityDatails;
     GoogleMap map;
 
     private static final String ARG_CITY_ID = "cityId";
@@ -92,8 +94,9 @@ private AdapterRecyclerViewCityDatails adapterRecyclerViewCityDatails;
         binding.mapView.onCreate(savedInstanceState);
         binding.mapView.getMapAsync(this);
         binding.recyclerViewOfTemp.setHasFixedSize(true);
-        binding.recyclerViewOfTemp.setLayoutManager( new GridLayoutManager(getActivity(),6));
-        adapterRecyclerViewCityDatails= new AdapterRecyclerViewCityDatails();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        binding.recyclerViewOfTemp.setLayoutManager(layoutManager);
+        adapterRecyclerViewCityDatails = new AdapterRecyclerViewCityDatails();
         binding.recyclerViewOfTemp.setAdapter(adapterRecyclerViewCityDatails);
     }
 
@@ -111,14 +114,11 @@ private AdapterRecyclerViewCityDatails adapterRecyclerViewCityDatails;
     public void onLoadSuccess(WeatherDetails weatherDetails) {
         binding.flError.setVisibility(View.GONE);
         binding.toolbarItem.setTitle(weatherDetails.getNameCity());
-        if(map!=null){
+        if (map != null) {
             map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(weatherDetails.getCoord()
                     .getLat(), weatherDetails.getCoord().getLon())));
         }
         adapterRecyclerViewCityDatails.setNewData(weatherDetails.getForeCastListOfItemForWeatherDetails());
-
-
-
     }
 
     @Override
@@ -130,9 +130,9 @@ private AdapterRecyclerViewCityDatails adapterRecyclerViewCityDatails;
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.getUiSettings().setMyLocationButtonEnabled(false);
-        if (cityDetailsFragmentPresenter.getCoord() != null){
+        if (cityDetailsFragmentPresenter.getCoord() != null) {
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(cityDetailsFragmentPresenter
-                    .getCoord().getLat(), cityDetailsFragmentPresenter.getCoord().getLon()),10));
+                    .getCoord().getLat(), cityDetailsFragmentPresenter.getCoord().getLon()), 10));
 
         }
 
